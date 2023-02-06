@@ -269,7 +269,11 @@ def inject_trainable_lora(
     names = []
 
     if loras != None:
-        loras = torch.load(loras)
+        if isinstance(loras, str):
+            loras = torch.load(loras)
+            print("Loading Loras from")
+        else:
+            print("Loading Loras raw")
 
     for _module, name, _child_module in _find_modules(
         model, target_replace_module, search_class=[nn.Linear]
